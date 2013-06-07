@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">Forecast</string>
+    <string name="na"></string>
+    <string name="degrees_unit">°</string>
+
+</resources>
