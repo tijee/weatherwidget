@@ -17,39 +17,43 @@ public class Forecast {
     }
 
     public void parseHourly(JSONObject json, int maxData) throws JSONException {
-	hourly.clear();
+	if (json != null) {
+	    hourly.clear();
 
-	JSONArray hourlyData = json.getJSONArray("list");
+	    JSONArray hourlyData = json.getJSONArray("list");
 
-	int hourlyDataCount = Math.min(hourlyData.length(), maxData);
+	    int hourlyDataCount = Math.min(hourlyData.length(), maxData);
 
-	for (int i = 0; i < hourlyDataCount; i++) {
-	    JSONObject data = hourlyData.getJSONObject(i);
-	    long time = data.getLong("dt") * 1000;
-	    JSONObject main = data.getJSONObject("main");
-	    JSONArray weather = data.getJSONArray("weather");
-	    double temp = main.getDouble("temp");
-	    String icon = weather.getJSONObject(0).getString("icon");
-	    hourly.add(new Data(time, icon, temp));
+	    for (int i = 0; i < hourlyDataCount; i++) {
+		JSONObject data = hourlyData.getJSONObject(i);
+		long time = data.getLong("dt") * 1000;
+		JSONObject main = data.getJSONObject("main");
+		JSONArray weather = data.getJSONArray("weather");
+		double temp = main.getDouble("temp");
+		String icon = weather.getJSONObject(0).getString("icon");
+		hourly.add(new Data(time, icon, temp));
+	    }
 	}
     }
 
     public void parseDaily(JSONObject json, int maxData) throws JSONException {
-	daily.clear();
+	if (json != null) {
+	    daily.clear();
 
-	JSONArray dailyData = json.getJSONArray("list");
+	    JSONArray dailyData = json.getJSONArray("list");
 
-	int dailyDataCount = Math.min(dailyData.length(), maxData);
+	    int dailyDataCount = Math.min(dailyData.length(), maxData);
 
-	for (int i = 0; i < dailyDataCount; i++) {
-	    JSONObject data = dailyData.getJSONObject(i);
-	    long time = data.getLong("dt") * 1000;
-	    JSONObject temp = data.getJSONObject("temp");
-	    JSONArray weather = data.getJSONArray("weather");
-	    double tempMin = temp.getDouble("min");
-	    double tempMax = temp.getDouble("max");
-	    String icon = weather.getJSONObject(0).getString("icon");
-	    daily.add(new Data(time, icon, tempMin, tempMax));
+	    for (int i = 0; i < dailyDataCount; i++) {
+		JSONObject data = dailyData.getJSONObject(i);
+		long time = data.getLong("dt") * 1000;
+		JSONObject temp = data.getJSONObject("temp");
+		JSONArray weather = data.getJSONArray("weather");
+		double tempMin = temp.getDouble("min");
+		double tempMax = temp.getDouble("max");
+		String icon = weather.getJSONObject(0).getString("icon");
+		daily.add(new Data(time, icon, tempMin, tempMax));
+	    }
 	}
     }
 
